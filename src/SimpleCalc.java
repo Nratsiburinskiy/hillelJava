@@ -54,7 +54,7 @@ public class SimpleCalc
                         System.out.println("Your");
                         double div = a / b; k++;
                         System.out.println("Division is " + div);
-                    } else System.out.println("Second number can't be zero");
+                    } else {System.out.println("Second number can't be zero"); k++;}
                     break;
                 }
                 default:
