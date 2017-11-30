@@ -24,6 +24,8 @@ public class Convert {
             for (j=0;j<m;j++){
                 if ((i==0)||(i==n-1)||(j==0)||(j==m-1)) arr[i][j]='*';
                 else arr[i][j]=' ';
+                if (n%2==1){if (m%2==1) arr[n/2][m/2]='*';
+                else {arr[n/2][m/2-1]='*';arr[n/2][m/2]='*';}}
                 if (Math.abs(j-c*i)<0.0001) arr[i][j]='*';
                 if (Math.abs(n-i-(j+1)*d)<0.0001) arr[i][j]='*';
             }
