@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.util.Scanner;
 
 public class SimpleCalc
@@ -16,22 +18,54 @@ public class SimpleCalc
 
         System.out.println("Please input second number: ");
         double b = 0; k=0;
-        while (k==0)
-        {
-            if (!in.hasNextDouble())  {System.out.println("Input is not correct,try harder");in = new Scanner(System.in);}
-            else
-                {b = in.nextDouble(); if (b!=0)
-            {k=1; System.out.println("Your input " + b + " as a second number.");}
-                else System.out.println("Second number can't be 0");}
+        while (k==0) {
+            if (!in.hasNextDouble()) {
+                System.out.println("Input is not correct,try harder");
+                in = new Scanner(System.in);
+            } else {
+                b = in.nextDouble();k++;
+                System.out.println("Your input " + b + " as a second number.");
+            }
         }
-        System.out.println("Your");
-        double sum = a+b;
-        System.out.println("Sum is "+sum);
-        double dif = a-b;
-        System.out.println("Difference is "+dif);
-        double mul = a*b;
-        System.out.println("Multiplication is "+mul);
-        double div = a/b;
-        System.out.println("Division is "+div);
+        System.out.println("Please input operation(+,-,*,/)");
+            String c = in.next();k=0;
+        while (k==0){
+            switch (c) {
+                case "+": {
+                    System.out.println("Your");
+                    double sum = a + b; k++;
+                    System.out.println("Sum is " + sum);
+                    break;
+                }
+                case "-": {
+                    System.out.println("Your");
+                    double dif = a - b; k++;
+                    System.out.println("Difference is " + dif);
+                    break;
+                }
+                case "*": {
+                    System.out.println("Your");
+                    double mul = a * b; k++;
+                    System.out.println("Multiplication is " + mul);
+                    break;
+                }
+                case "/": {
+                    if (b != 0) {
+                        System.out.println("Your");
+                        double div = a / b; k++;
+                        System.out.println("Division is " + div);
+                    } else System.out.println("Second number can't be zero");
+                    break;
+                }
+                default:
+                {
+                    System.out.println("Input is not correct,try harder");c = in.next();
+                }
+        }
+        }
+
+
+
+
     }
 }
