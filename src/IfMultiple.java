@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class IfMultiple {
     public static void main(String[] args) {
-        System.out.println("Please enter your number: ");int k=0;long n=0;
+        System.out.println("Please enter your number: ");int k=0;long c,d,n=0;
         Scanner in = new Scanner(System.in);
         while (k==0)
         {
@@ -9,14 +9,13 @@ public class IfMultiple {
             else {n = in.nextLong();k=1;
                 System.out.println("Your input " + n + " as your number.");}
         }
-        multiple(n);
-    }
-
-    private static void multiple(long x) {
-        long i;
-        for (i=1;i<=(x);i++)
-        {
-            if(x%i==0) System.out.println("Your number is multiple to "+i);
+        for (k=2;k<=Math.sqrt(n);++k) {
+            if (n%k==0) {
+                System.out.println(k);
+                if (k!=n/k)
+                    System.out.println(n/k);
+            }
         }
     }
+
 }
