@@ -4,11 +4,12 @@ import java.util.Scanner;
 public class StudentsGroup {
     public static void main(String[] args) {
         Student[] group = new Student[0];
+        Student[] another = new Student[0];
         Scanner in = new Scanner(System.in);
         int k = 0;
         String s = "";
         for (; ; ) {
-            System.out.println("Please choose what do you want to do(add,print,delete,contains,clear,trim,addmark,addvisit,exit): ");
+            System.out.println("Please choose what do you want to do((add,print,delete,contains,clear,trim,addmark,addvisit,)+another,join,equal,containsall,exit): ");
             while (k == 0) {
                 if (!in.hasNext()) {
                     System.out.println("Input is not correct,try harder");
@@ -24,27 +25,64 @@ public class StudentsGroup {
                     group = add(group);
                 }
                 break;
+                case "addanother":{
+                    another=add(another);
+                }
+                break;
                 case "print":
                     print(group);
                     break;
+                case "printanother":
+                    print(another);
+                    break;
                 case "delete":
                     group = delete(group);
+                    break;
+                case "deleteanother":
+                    another = delete(another);
                     break;
                 case "contains":
                     if (contains(group)) System.out.println("Yes,there is such student in this group");
                     else System.out.println("No,there is no such student in this group");
                     break;
+                case "containsanother":
+                    if (contains(another)) System.out.println("Yes,there is such student in this group");
+                    else System.out.println("No,there is no such student in this group");
+                    break;
                 case "clear":
                     group = clear();
+                    break;
+                case "clearanother":
+                    another = clear();
                     break;
                 case "trim":
                     group = trim(group);
                     break;
+                case "trimanother":
+                    another = trim(another);
+                    break;
                 case "addmark":
                     group = addmark(group);
                     break;
+                case "addmarkanother":
+                    another = addmark(another);
+                    break;
                 case "addvisit":
                     group = addvisit(group);
+                    break;
+                case "addvisitanother":
+                    another = addvisit(another);
+                    break;
+                case "join":
+                    group=join(group,another);
+                    break;
+                case "equals":
+                    if (equals(group,another)) System.out.println("Yes,these groups are equal");
+                    else System.out.println("No, these groups aren't equal");
+                    break;
+                case "containsall":
+                    if (containsAll(group,another)) System.out.println("yes,contains");
+                    System.out.println("no,doesn't contain");
                     break;
                 case "exit":
                     k = 1;
@@ -254,6 +292,59 @@ public class StudentsGroup {
         }
 
         return arr;
+    }
+    private static Student[] join(Student[] arr1,Student[] arr2)
+    {
+        int i,n=arr1.length,m=arr2.length;
+        Student[] join = new Student[n+m];
+        for (i=0;i<n+m;i++)
+        {
+            if (i<n) join[i]=arr1[i];
+            else join[i]=arr2[i];
+        }
+        return join;
+    }
+
+    private static boolean equals(Student[] arr1,Student[] arr2)
+    {
+        int i,j,k=0,n=arr1.length,m=arr2.length;boolean f=false;
+        if (n==m)
+            for (i=0;i<n;i++)
+        {
+            for (j=0;j<n;j++)
+            {
+                if (arr1[i].surname.equals(arr2[j].surname)) k++;
+            }
+        }
+        if (k==n) f=true;
+        return f;
+    }
+    private static boolean containsAll(Student[] arr1,Student[] arr2)
+    {
+        int i,j,k=0,n=arr1.length,m=arr2.length;boolean f=false;
+        if (n<m)
+        {
+            for (i=0;i<n;i++)
+            {
+                for (j=0;j<m;j++)
+                {
+                    if (arr1[i].surname.equals(arr2[j].surname)) k++;
+                }
+            }
+            if (k==n) f=true;
+        }
+        else
+        {
+            for (j=0;j<m;j++)
+            {
+                for (i=0;i<n;i++)
+                {
+                    if (arr1[j].surname.equals(arr2[i].surname)) k++;
+                }
+            }
+            if (k==m) f=true;
+        }
+        return f;
     }
 }
 
