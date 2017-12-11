@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class StudentsGroup {
@@ -7,7 +8,7 @@ public class StudentsGroup {
         int k = 0;
         String s = "";
         for (; ; ) {
-            System.out.println("Please choose what do you want to do(add,print,delete,contains,clear,prim,exit): ");
+            System.out.println("Please choose what do you want to do(add,print,delete,contains,clear,trim,addmark,addvisit,exit): ");
             while (k == 0) {
                 if (!in.hasNext()) {
                     System.out.println("Input is not correct,try harder");
@@ -20,7 +21,7 @@ public class StudentsGroup {
             k = 0;
             switch (s) {
                 case "add": {
-                    group=add(group);
+                    group = add(group);
                 }
                 break;
                 case "print":
@@ -34,7 +35,16 @@ public class StudentsGroup {
                     else System.out.println("No,there is no such student in this group");
                     break;
                 case "clear":
-                    group=clear();
+                    group = clear();
+                    break;
+                case "trim":
+                    group = trim(group);
+                    break;
+                case "addmark":
+                    group = addmark(group);
+                    break;
+                case "addvisit":
+                    group = addvisit(group);
                     break;
                 case "exit":
                     k = 1;
@@ -59,9 +69,15 @@ public class StudentsGroup {
                 System.out.println("Input is not correct,try harder");
                 in = new Scanner(System.in);
             } else {
-                addstudent[arr.length] =new Student();
+                addstudent[arr.length] = new Student();
                 addstudent[arr.length].surname = in.next();
                 k = 1;
+            }
+        }
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].surname.equals(addstudent[arr.length].surname)) {
+                System.out.println("There is already such student in the group");
+                return arr;
             }
         }
         return addstudent;
@@ -71,16 +87,25 @@ public class StudentsGroup {
         for (Student s : arr
                 ) {
             if (s.surname.isEmpty()) System.out.println("There is no studens in group");
-            else
-                System.out.println(s.surname);
+            else {
+                System.out.print(s.surname + " marks: " + Arrays.toString(s.marks) + " visits: ");
+                if (s.visits.length != 0) {
+                    for (int i = 0; i < s.visits.length; i++) {
+                        if (s.visits[i]) System.out.print("+");
+                        else System.out.print("-");
+                    }
+                }
+                System.out.println("");
+            }
         }
     }
+
 
     private static Student[] delete(Student[] arr) {
         Student[] delete = new Student[arr.length - 1];
         System.out.println("Inpute surname of the student you want to delete: ");
         Scanner in = new Scanner(System.in);
-        int i = 0, k = 0;
+        int i , k = 0;
         String s = "";
         while (k == 0) {
             if (!in.hasNext()) {
@@ -93,7 +118,7 @@ public class StudentsGroup {
         }
         int n = 0;
         for (i = 0; i < arr.length - 1; i++) {
-            if ((!((arr[i].surname).equals(s)))&&(n==0)) {
+            if ((!((arr[i].surname).equals(s))) && (n == 0)) {
                 delete[i] = arr[i];
             }
             if ((arr[i].surname).equals(s)) {
@@ -104,7 +129,7 @@ public class StudentsGroup {
                 delete[i] = arr[i + 1];
             }
         }
-        if ((arr.length==1)&&(arr[0].surname).equals(s)) n=1;
+        if ((arr.length == 1) && (arr[0].surname).equals(s)) n = 1;
         if (n == 0) System.out.println("There is no such student " + s);
         if (n == 1) {
             return delete;
@@ -113,7 +138,7 @@ public class StudentsGroup {
 
     private static boolean contains(Student[] arr) {
         System.out.println("Please inpute surname of student you are looking: ");
-        int i = 0, k = 0;
+        int  k = 0;
         Scanner in = new Scanner(System.in);
         String s = "";
         boolean f = false;
@@ -133,35 +158,28 @@ public class StudentsGroup {
     }
 
     private static Student[] clear() {
-        Student[] c = new Student[0];
-        return c;
+        return new Student[0];
     }
 
-    private static Student[] prim(Student[] arr) {
+    private static Student[] trim(Student[] arr) {
         int k = 0, n = 0;
         for (Student s : arr) {
-            if (s.equals("")) k++;
+            if ((s.surname).equals("")) k++;
         }
-        Student[] prim = new Student[arr.length - k];
+        Student[] trim = new Student[arr.length - k];
         for (int i = 0; i < arr.length - k; i++) {
-            if ((arr[i].equals(""))) {
+            if (((arr[i].surname).equals(""))) {
                 n++;
-                prim[i] = arr[i + n];
-            } else prim[i] = arr[i + n];
+                trim[i] = arr[i + n];
+            } else trim[i] = arr[i + n];
         }
-        return prim;
+        return trim;
     }
 
-    private static int[][] studentmark(int[][] arr) {
-        int[][] studentmark = new int[arr.length + 1][];
-        return studentmark;
-    }
-
-    private static int[][] addmark(String[] student, int[][] arr) {
-        int[][] addmark = new int[arr.length][];
-        System.out.println("Please enter which student do you want to mark?");
+    private static Student[] addmark(Student[] arr) {
+        System.out.println("Please enter surname of the student you want to mark: ");
+        int i , n = 0, k = 0;
         Scanner in = new Scanner(System.in);
-        int i, k = 0;
         String s = "";
         while (k == 0) {
             if (!in.hasNext()) {
@@ -169,15 +187,73 @@ public class StudentsGroup {
                 in = new Scanner(System.in);
             } else {
                 s = in.next();
-                k = -1;
+                k = 1;
             }
         }
-        for (i = 0; i < student.length; i++) {
-            if (student[i].equals(s)) {
-                k = i;
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].surname.equals(s)) {
+                System.out.println("Please enter your mark");
+                while (k == 1) {
+                    if (!in.hasNextInt()) {
+                        System.out.println("Input is not correct,try harder");
+                        in = new Scanner(System.in);
+                    } else {
+                        int[] m;
+                        m = Arrays.copyOf(arr[i].marks, arr[i].marks.length + 1);
+                        m[arr[i].marks.length] = in.nextInt();
+                        arr[i].marks = m;
+                        k = 0;
+                    }
+                }
+            } else n++;
+            if (n == arr.length) System.out.println("No such student.");
+        }
+        return arr;
+    }
+
+    private static Student[] addvisit(Student[] arr) {
+        System.out.println("Please enter surname of the student you want to acknowledge the presence of:");
+        int i, n = 0, k = 0;
+        boolean f = false;
+        Scanner in = new Scanner(System.in);
+        String s = "", l;
+        while (k == 0) {
+            if (!in.hasNext()) {
+                System.out.println("Input is not correct,try harder");
+                in = new Scanner(System.in);
+            } else {
+                s = in.next();
+                k = 1;
             }
         }
-        return addmark;
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].surname.equals(s)) {
+                System.out.println("Please enter his presence(+,-)");
+                while (k == 1) {
+                    if (!in.hasNext()) {
+                        System.out.println("Input is not correct,try harder");
+                        in = new Scanner(System.in);
+                    } else {
+                        boolean[] m;
+                        m = Arrays.copyOf(arr[i].visits, arr[i].visits.length + 1);
+                        l = in.next();
+                        if (l.equals("+")) {
+                            f = true;
+                            k = 0;
+                        }
+                        if (l.equals("-")) {
+                            f = false;
+                            k = 0;
+                        }
+                        m[arr[i].visits.length] = f;
+                        arr[i].visits = m;
+                    }
+                }
+            } else n++;
+            if (n == arr.length) System.out.println("No such student.");
+        }
+
+        return arr;
     }
 }
 
