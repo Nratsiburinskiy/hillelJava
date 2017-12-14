@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class StudentsGroup {
@@ -9,7 +10,7 @@ public class StudentsGroup {
         int k = 0;
         String s = "";
         for (; ; ) {
-            System.out.println("Please choose what do you want to do((add,print,delete,contains,clear,trim,addmark,addvisit,)+another,join,equal,containsall,exit): ");
+            System.out.println("Please choose what do you want to do((add,print,delete,contains,clear,trim,addmark,addvisit,sort)+another,join,equal,containsall,exit): ");
             while (k == 0) {
                 if (!in.hasNext()) {
                     System.out.println("Input is not correct,try harder");
@@ -25,8 +26,8 @@ public class StudentsGroup {
                     group = add(group);
                 }
                 break;
-                case "addanother":{
-                    another=add(another);
+                case "addanother": {
+                    another = add(another);
                 }
                 break;
                 case "print":
@@ -73,15 +74,21 @@ public class StudentsGroup {
                 case "addvisitanother":
                     another = addvisit(another);
                     break;
+                case "sort":
+                    group = sort(group);
+                    break;
+                case "sortanother":
+                    another = sort(another);
+                    break;
                 case "join":
-                    group=join(group,another);
+                    group = join(group, another);
                     break;
                 case "equals":
-                    if (equals(group,another)) System.out.println("Yes,these groups are equal");
+                    if (equals(group, another)) System.out.println("Yes,these groups are equal");
                     else System.out.println("No, these groups aren't equal");
                     break;
                 case "containsall":
-                    if (containsAll(group,another)) System.out.println("yes,contains");
+                    if (containsAll(group, another)) System.out.println("yes,contains");
                     System.out.println("no,doesn't contain");
                     break;
                 case "exit":
@@ -143,7 +150,7 @@ public class StudentsGroup {
         Student[] delete = new Student[arr.length - 1];
         System.out.println("Inpute surname of the student you want to delete: ");
         Scanner in = new Scanner(System.in);
-        int i , k = 0;
+        int i, k = 0;
         String s = "";
         while (k == 0) {
             if (!in.hasNext()) {
@@ -176,7 +183,7 @@ public class StudentsGroup {
 
     private static boolean contains(Student[] arr) {
         System.out.println("Please inpute surname of student you are looking: ");
-        int  k = 0;
+        int k = 0;
         Scanner in = new Scanner(System.in);
         String s = "";
         boolean f = false;
@@ -216,7 +223,7 @@ public class StudentsGroup {
 
     private static Student[] addmark(Student[] arr) {
         System.out.println("Please enter surname of the student you want to mark: ");
-        int i , n = 0, k = 0;
+        int i, n = 0, k = 0;
         Scanner in = new Scanner(System.in);
         String s = "";
         while (k == 0) {
@@ -293,58 +300,78 @@ public class StudentsGroup {
 
         return arr;
     }
-    private static Student[] join(Student[] arr1,Student[] arr2)
-    {
-        int i,n=arr1.length,m=arr2.length;
-        Student[] join = new Student[n+m];
-        for (i=0;i<n+m;i++)
-        {
-            if (i<n) join[i]=arr1[i];
-            else join[i]=arr2[i];
+
+    private static Student[] join(Student[] arr1, Student[] arr2) {
+        int i, n = arr1.length, m = arr2.length;
+        Student[] join = new Student[n + m];
+        for (i = 0; i < n + m; i++) {
+            if (i < n) join[i] = arr1[i];
+            else join[i] = arr2[i - n];
         }
         return join;
     }
 
-    private static boolean equals(Student[] arr1,Student[] arr2)
-    {
-        int i,j,k=0,n=arr1.length,m=arr2.length;boolean f=false;
-        if (n==m)
-            for (i=0;i<n;i++)
-        {
-            for (j=0;j<n;j++)
-            {
-                if (arr1[i].surname.equals(arr2[j].surname)) k++;
-            }
-        }
-        if (k==n) f=true;
-        return f;
-    }
-    private static boolean containsAll(Student[] arr1,Student[] arr2)
-    {
-        int i,j,k=0,n=arr1.length,m=arr2.length;boolean f=false;
-        if (n<m)
-        {
-            for (i=0;i<n;i++)
-            {
-                for (j=0;j<m;j++)
-                {
+    private static boolean equals(Student[] arr1, Student[] arr2) {
+        int i, j, k = 0, n = arr1.length, m = arr2.length;
+        boolean f = false;
+        if (n == m)
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
                     if (arr1[i].surname.equals(arr2[j].surname)) k++;
                 }
             }
-            if (k==n) f=true;
-        }
-        else
-        {
-            for (j=0;j<m;j++)
-            {
-                for (i=0;i<n;i++)
-                {
+        if (k == n) f = true;
+        return f;
+    }
+
+    private static boolean containsAll(Student[] arr1, Student[] arr2) {
+        int i, j, k = 0, n = arr1.length, m = arr2.length;
+        boolean f = false;
+        if (n < m) {
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < m; j++) {
+                    if (arr1[i].surname.equals(arr2[j].surname)) k++;
+                }
+            }
+            if (k == n) f = true;
+        } else {
+            for (j = 0; j < m; j++) {
+                for (i = 0; i < n; i++) {
                     if (arr1[j].surname.equals(arr2[i].surname)) k++;
                 }
             }
-            if (k==m) f=true;
+            if (k == m) f = true;
         }
         return f;
+    }
+
+    private static Student[] sort(Student[] arr) {
+        Student[] sort = new Student[arr.length];
+        String[] words = new String[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            words[i] = arr[i].surname;
+        }
+        Arrays.sort(words);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(words[i]);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            sort[].surname = Arrays.copyOf(words, arr.length);
+            for (Student s : arr) {
+                if (s.surname.equals(sort[i].surname)) {
+                    sort[i].marks = s.marks;
+                    sort[i].visits = s.visits;
+                }
+            }
+        }
+        return sort;
+    }
+
+    static Comparator sorderer = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            return 0;
+        }
     }
 }
 
