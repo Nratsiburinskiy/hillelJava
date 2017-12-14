@@ -74,12 +74,12 @@ public class StudentsGroup {
                 case "addvisitanother":
                     another = addvisit(another);
                     break;
-                case "sort":
-                    group = sort(group);
-                    break;
-                case "sortanother":
-                    another = sort(another);
-                    break;
+//                case "sort":
+//                    group = sort(group);
+//                    break;
+//                case "sortanother":
+//                    another = sort(another);
+//                    break;
                 case "join":
                     group = join(group, another);
                     break;
@@ -345,33 +345,33 @@ public class StudentsGroup {
         return f;
     }
 
-    private static Student[] sort(Student[] arr) {
-        Student[] sort = new Student[arr.length];
-        String[] words = new String[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            words[i] = arr[i].surname;
-        }
-        Arrays.sort(words);
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(words[i]);
-        }
-        for (int i = 0; i < arr.length; i++) {
-            sort[].surname = Arrays.copyOf(words, arr.length);
-            for (Student s : arr) {
-                if (s.surname.equals(sort[i].surname)) {
-                    sort[i].marks = s.marks;
-                    sort[i].visits = s.visits;
-                }
-            }
-        }
-        return sort;
-    }
+//    private static Student[] sort(Student[] arr) {
+//        Student[] sort = new Student[arr.length];
+//        String[] words = new String[arr.length];
+//        for (int i = 0; i < arr.length; i++) {
+//            words[i] = arr[i].surname;
+//        }
+//        Arrays.sort(words);
+//        for (int i = 0; i < arr.length; i++) {
+//            System.out.println(words[i]);
+//        }
+//        for (int i = 0; i < arr.length; i++) {
+//            sort[].surname = Arrays.copyOf(words, arr.length);
+//            for (Student s : arr) {
+//                if (s.surname.equals(sort[i].surname)) {
+//                    sort[i].marks = s.marks;
+//                    sort[i].visits = s.visits;
+//                }
+//            }
+//        }
+//        return sort;
+//    }
 
-    static Comparator sorderer = new Comparator() {
-        @Override
-        public int compare(Object o1, Object o2) {
-            return 0;
-        }
-    }
+//    static Comparator sorderer = new Comparator() {
+//        @Override
+//        public int compare(Object o1, Object o2) {
+//            return 0;
+//        }
+//    }
 }
 
