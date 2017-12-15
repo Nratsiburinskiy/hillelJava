@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 
 public class StudentsGroup {
@@ -74,9 +73,9 @@ public class StudentsGroup {
                 case "addvisitanother":
                     another = addvisit(another);
                     break;
-//                case "sort":
-//                    group = sort(group);
-//                    break;
+                case "sort":
+                    sort(group);
+                    break;
 //                case "sortanother":
 //                    another = sort(another);
 //                    break;
@@ -89,7 +88,7 @@ public class StudentsGroup {
                     break;
                 case "containsall":
                     if (containsAll(group, another)) System.out.println("yes,contains");
-                    System.out.println("no,doesn't contain");
+                    else System.out.println("no,doesn't contain");
                     break;
                 case "exit":
                     k = 1;
@@ -337,7 +336,7 @@ public class StudentsGroup {
         } else {
             for (j = 0; j < m; j++) {
                 for (i = 0; i < n; i++) {
-                    if (arr1[j].surname.equals(arr2[i].surname)) k++;
+                    if (arr1[i].surname.equals(arr2[j].surname)) k++;
                 }
             }
             if (k == m) f = true;
@@ -345,33 +344,31 @@ public class StudentsGroup {
         return f;
     }
 
-//    private static Student[] sort(Student[] arr) {
-//        Student[] sort = new Student[arr.length];
-//        String[] words = new String[arr.length];
-//        for (int i = 0; i < arr.length; i++) {
-//            words[i] = arr[i].surname;
-//        }
-//        Arrays.sort(words);
-//        for (int i = 0; i < arr.length; i++) {
-//            System.out.println(words[i]);
-//        }
-//        for (int i = 0; i < arr.length; i++) {
-//            sort[].surname = Arrays.copyOf(words, arr.length);
-//            for (Student s : arr) {
-//                if (s.surname.equals(sort[i].surname)) {
-//                    sort[i].marks = s.marks;
-//                    sort[i].visits = s.visits;
-//                }
-//            }
-//        }
-//        return sort;
-//    }
+    private static void sort(Student[] arr) {
+        int i,j,n,k=0;boolean f;
+        Student s=new Student();
+        for (n=1;n<arr.length;n++) {
+            for (i = k; i < arr.length; i++) {
+                f = true;
+                for (j = k; j < arr.length; j++) {
+                    if (arr[i].compareTo(arr[i], arr[j]) > 0) f = false;
+                }
+                if (f) {
+                    s.surname = arr[k].surname;
+                    s.marks = arr[k].marks;
+                    s.visits = arr[k].visits;
+                    arr[k].surname = arr[i].surname;
+                    arr[k].visits = arr[i].visits;
+                    arr[k].marks = arr[i].marks;
+                    arr[i].surname = s.surname;
+                    arr[i].marks = s.marks;
+                    arr[i].visits = s.visits;
+                    k++;
+                }
+            }
+        }
+    }
 
-//    static Comparator sorderer = new Comparator() {
-//        @Override
-//        public int compare(Object o1, Object o2) {
-//            return 0;
-//        }
-//    }
+
 }
 
