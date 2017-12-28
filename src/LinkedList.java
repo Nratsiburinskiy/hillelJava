@@ -1,14 +1,14 @@
-class ListElement<E> {
+class ListElement {
     ListElement next;
     ListElement prev;
-    E data;
+    Object data;
 }
 
-class LinkedList<E> {
+class LinkedList {
     private ListElement head;
     private ListElement tail;
 
-    void addFront(E data){
+    void addFront(Object data){
         ListElement a= new ListElement();
         a.data=data;
         if (head==null){
@@ -21,7 +21,7 @@ class LinkedList<E> {
             head=a;
         }
     }
-    void addBack(E data){
+    void addBack(Object data){
         ListElement a =new ListElement();
         a.data=data;
         if(tail==null){
@@ -41,7 +41,7 @@ class LinkedList<E> {
             t=t.next;
         }
     }
-    void delEl(E data){
+    void delEl(Object data){
         if (head==null){
             return;
         }
